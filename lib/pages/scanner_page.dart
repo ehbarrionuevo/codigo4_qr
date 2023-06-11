@@ -78,11 +78,11 @@ class _ScannerPageState extends State<ScannerPage> {
           Expanded(child: _buildQrView(context)),
           // Expanded(child: SizedBox()),
           Container(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
               vertical: 20.0,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16.0),
