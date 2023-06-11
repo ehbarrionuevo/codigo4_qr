@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:codigo4_qr/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -13,6 +14,8 @@ class _ScannerPageState extends State<ScannerPage> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+
+  Data mandarina = Data();
 
   @override
   void reassemble() {
@@ -72,6 +75,7 @@ class _ScannerPageState extends State<ScannerPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(mandarina.qrList);
     return Scaffold(
       body: Column(
         children: [
@@ -126,7 +130,16 @@ class _ScannerPageState extends State<ScannerPage> {
                   height: 48.0,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Data().qrList.add(
+                        {
+                          "id": 4,
+                          "description": "Video de Youtube",
+                          "qr":
+                              "https://www.youtube.com/watch?v=nhPaWIeULKk&list=RDJtH68PJIQLE&index=4"
+                        },
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
                       shape: RoundedRectangleBorder(

@@ -1,3 +1,4 @@
+import 'package:codigo4_qr/data/data.dart';
 import 'package:codigo4_qr/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,12 +21,13 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: Data().qrList.length,
         itemBuilder: (BuildContext context, int index) {
+          Map qrData = Data().qrList[index];
+
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-            // color: Colors.amber,
             decoration: BoxDecoration(
               border: Border.all(
                 width: 1,
@@ -40,7 +42,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Carta del menú de la esquina askdjhs askdnsaldkn ",
+                        qrData["description"],
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.normal,
