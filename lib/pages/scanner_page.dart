@@ -76,6 +76,71 @@ class _ScannerPageState extends State<ScannerPage> {
       body: Column(
         children: [
           Expanded(child: _buildQrView(context)),
+          // Expanded(child: SizedBox()),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 20.0,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
+              ),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "https://www.youtube.com/watch?v=p3wqviiVarY&list=RDp3wqviiVarY&start_radio=1",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: "Ingresa una descripción",
+                    filled: true,
+                    fillColor: Colors.black.withOpacity(0.06),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                SizedBox(
+                  height: 48.0,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.indigo,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: const Text(
+                      "Registrar",
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
