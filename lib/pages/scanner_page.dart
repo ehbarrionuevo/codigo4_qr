@@ -15,7 +15,7 @@ class _ScannerPageState extends State<ScannerPage> {
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  Data mandarina = Data();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   void reassemble() {
@@ -75,7 +75,6 @@ class _ScannerPageState extends State<ScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(mandarina.qrList);
     return Scaffold(
       body: Column(
         children: [
@@ -105,6 +104,7 @@ class _ScannerPageState extends State<ScannerPage> {
                   height: 16.0,
                 ),
                 TextField(
+                  controller: descriptionController,
                   decoration: InputDecoration(
                     hintText: "Ingresa una descripción",
                     filled: true,
@@ -133,8 +133,8 @@ class _ScannerPageState extends State<ScannerPage> {
                     onPressed: () {
                       Data().qrList.add(
                         {
-                          "id": 4,
-                          "description": "Video de Youtube",
+                          "id": Data().qrList.length + 1,
+                          "description": descriptionController.text,
                           "qr":
                               "https://www.youtube.com/watch?v=nhPaWIeULKk&list=RDJtH68PJIQLE&index=4"
                         },
