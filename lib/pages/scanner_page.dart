@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codigo4_qr/data/data.dart';
 import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:flutter/material.dart';
@@ -133,17 +134,17 @@ class _ScannerPageState extends State<ScannerPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // qrValue =
-                      //     "https://www.youtube.com/watch?v=COz9lDCFHjw&list=RDU68MJz9DrI4&index=2";
+                      qrValue =
+                          "https://www.youtube.com/watch?v=COz9lDCFHjw&list=RDU68MJz9DrI4&index=2";
 
-                      // QrModel model = QrModel(
-                      //   id: 1,
-                      //   description: descriptionController.text,
-                      //   datetime: DateTime.now(),
-                      //   qr: qrValue,
-                      // );
+                      QrModel model = QrModel(
+                        id: 1,
+                        description: descriptionController.text,
+                        datetime: Timestamp.fromDate(DateTime.now()),
+                        qr: qrValue,
+                      );
 
-                      // Data().addQr(model);
+                      Data().addQr(model);
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
