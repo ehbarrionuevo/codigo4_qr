@@ -1,7 +1,7 @@
 import 'package:codigo4_qr/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 

@@ -1,4 +1,5 @@
 import 'package:codigo4_qr/data/data.dart';
+import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:codigo4_qr/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +22,10 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: Data().qrList.length,
+        itemCount: Data().getQrListLength(),
         itemBuilder: (BuildContext context, int index) {
-          Map qrData = Data().qrList[index];
+          // Map qrData = Data().qrList[index];
+          QrModel model = Data().getValue(index);
 
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
@@ -42,7 +44,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        qrData["description"],
+                        model.description,
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.normal,
@@ -52,7 +54,7 @@ class HomePage extends StatelessWidget {
                         height: 4.0,
                       ),
                       Text(
-                        "12/06/2023",
+                        model.datetime.toString(),
                         style: TextStyle(
                           fontSize: 12.0,
                           color: Colors.black54,

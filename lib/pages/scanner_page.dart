@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:codigo4_qr/data/data.dart';
+import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -14,7 +15,7 @@ class _ScannerPageState extends State<ScannerPage> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
+  String qrValue = "";
   TextEditingController descriptionController = TextEditingController();
 
   @override
@@ -53,7 +54,8 @@ class _ScannerPageState extends State<ScannerPage> {
       setState(() {
         result = scanData;
         if (result != null) {
-          print("VALOR ESCANEADOOOOOOOOOOOOOO: ${result!.code}");
+          // print("VALOR ESCANEADOOOOOOOOOOOOOO: ${result!.code}");
+          qrValue = result!.code!;
         }
       });
     });
@@ -131,14 +133,16 @@ class _ScannerPageState extends State<ScannerPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Data().qrList.add(
-                        {
-                          "id": Data().qrList.length + 1,
-                          "description": descriptionController.text,
-                          "qr":
-                              "https://www.youtube.com/watch?v=nhPaWIeULKk&list=RDJtH68PJIQLE&index=4"
-                        },
+                      qrValue =
+                          "https://www.youtube.com/watch?v=COz9lDCFHjw&list=RDU68MJz9DrI4&index=2";
+
+                      QrModel model = QrModel(
+                        id: 1,
+                        description: descriptionController.text,
+                        datetime: DateTime.now(),
+                        qr: qrValue,
                       );
+                      Data().addQr(model);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
