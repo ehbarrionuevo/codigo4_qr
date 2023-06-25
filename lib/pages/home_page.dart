@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codigo4_qr/data/data.dart';
 import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:codigo4_qr/pages/scanner_page.dart';
@@ -9,8 +10,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  CollectionReference qrCollection =
+      FirebaseFirestore.instance.collection("qr_collection");
+
   @override
   Widget build(BuildContext context) {
+    qrCollection.get().then((value) {
+      print(value.size);
+    });
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.qr_code_scanner),

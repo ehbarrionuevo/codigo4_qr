@@ -142,6 +142,7 @@ class _ScannerPageState extends State<ScannerPage> {
                         datetime: DateTime.now(),
                         qr: qrValue,
                       );
+
                       Data().addQr(model);
 
                       ScaffoldMessenger.of(context).showSnackBar(
