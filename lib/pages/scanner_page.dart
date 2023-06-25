@@ -133,17 +133,17 @@ class _ScannerPageState extends State<ScannerPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      qrValue =
-                          "https://www.youtube.com/watch?v=COz9lDCFHjw&list=RDU68MJz9DrI4&index=2";
+                      // qrValue =
+                      //     "https://www.youtube.com/watch?v=COz9lDCFHjw&list=RDU68MJz9DrI4&index=2";
 
-                      QrModel model = QrModel(
-                        id: 1,
-                        description: descriptionController.text,
-                        datetime: DateTime.now(),
-                        qr: qrValue,
-                      );
+                      // QrModel model = QrModel(
+                      //   id: 1,
+                      //   description: descriptionController.text,
+                      //   datetime: DateTime.now(),
+                      //   qr: qrValue,
+                      // );
 
-                      Data().addQr(model);
+                      // Data().addQr(model);
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

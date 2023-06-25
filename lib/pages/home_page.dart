@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
       print(value.size);
     });
 
+    //Stream
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.qr_code_scanner),
@@ -37,56 +39,79 @@ class _HomePageState extends State<HomePage> {
           "Listado general",
         ),
       ),
-      body: ListView.builder(
-        itemCount: Data().getQrListLength(),
-        itemBuilder: (BuildContext context, int index) {
-          // Map qrData = Data().qrList[index];
-          QrModel model = Data().getValue(index);
+      // body: ListView.builder(
+      //   itemCount: Data().getQrListLength(),
+      //   itemBuilder: (BuildContext context, int index) {
+      //     // Map qrData = Data().qrList[index];
+      //     QrModel model = Data().getValue(index);
 
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 1,
-                color: Colors.black.withOpacity(0.1),
-              ),
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        model.description,
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 4.0,
-                      ),
-                      Text(
-                        model.datetime.toString(),
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.qr_code),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          );
+      //     return Container(
+      //       margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
+      //       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      //       decoration: BoxDecoration(
+      //         border: Border.all(
+      //           width: 1,
+      //           color: Colors.black.withOpacity(0.1),
+      //         ),
+      //         borderRadius: BorderRadius.circular(12.0),
+      //       ),
+      //       child: Row(
+      //         children: [
+      //           Expanded(
+      //             child: Column(
+      //               crossAxisAlignment: CrossAxisAlignment.start,
+      //               children: [
+      //                 Text(
+      //                   model.description,
+      //                   style: TextStyle(
+      //                     fontSize: 15.0,
+      //                     fontWeight: FontWeight.normal,
+      //                   ),
+      //                 ),
+      //                 const SizedBox(
+      //                   height: 4.0,
+      //                 ),
+      //                 Text(
+      //                   model.datetime.toString(),
+      //                   style: TextStyle(
+      //                     fontSize: 12.0,
+      //                     color: Colors.black54,
+      //                     fontWeight: FontWeight.normal,
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //           IconButton(
+      //             icon: Icon(Icons.qr_code),
+      //             onPressed: () {},
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
+
+      /// Datos desde Firebase - Future
+
+      body: FutureBuilder(
+        future: qrCollection.get(),
+        builder: (BuildContext context, AsyncSnapshot snap) {
+          if (snap.hasData) {
+            QuerySnapshot collection = snap.data;
+            List<QueryDocumentSnapshot> docs = collection.docs;
+            return ListView.builder(
+              itemCount: docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                Map<String, dynamic> data =
+                    docs[index].data() as Map<String, dynamic>;
+                QrModel model = QrModel.fromJson(data);
+
+                return Text(docs[index].data().toString());
+              },
+            );
+          }
+          return CircularProgressIndicator();
         },
       ),
     );

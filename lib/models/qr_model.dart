@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class QrModel {
   int id;
   String description;
-  DateTime datetime;
+  Timestamp datetime;
   String qr;
 
   QrModel({
@@ -14,7 +16,7 @@ class QrModel {
   factory QrModel.fromJson(Map<String, dynamic> json) => QrModel(
         id: json["id"] ?? 0,
         description: json["description"] ?? 0,
-        datetime: json["datetime"] ?? 0,
+        datetime: json["datetime"],
         qr: json["qr"] ?? 0,
       );
 
