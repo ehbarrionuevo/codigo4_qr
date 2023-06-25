@@ -3,7 +3,12 @@ import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:codigo4_qr/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,8 +16,11 @@ class HomePage extends StatelessWidget {
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: Colors.pinkAccent,
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ScannerPage()));
+          Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScannerPage()))
+              .then((value) {
+            setState(() {});
+          });
         },
       ),
       appBar: AppBar(

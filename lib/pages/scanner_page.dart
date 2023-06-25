@@ -143,6 +143,16 @@ class _ScannerPageState extends State<ScannerPage> {
                         qr: qrValue,
                       );
                       Data().addQr(model);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            "Se registró correctamente",
+                          ),
+                        ),
+                      );
+
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
