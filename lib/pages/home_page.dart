@@ -3,6 +3,7 @@ import 'package:codigo4_qr/data/data.dart';
 import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:codigo4_qr/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,6 +13,64 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CollectionReference qrCollection =
       FirebaseFirestore.instance.collection("qr_collection");
+
+  void showDetailQR(QrModel model) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Detalle QR",
+              ),
+              const Divider(),
+              Row(
+                children: [
+                  Text(
+                    "Descripción: ",
+                  ),
+                  Expanded(
+                    child: Text(model.description),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Fecha: ",
+                  ),
+                  Expanded(
+                    child: Text(
+                      model.datetime.toString(),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              SizedBox(
+                height: 120,
+                width: 120,
+                child: QrImageView(
+                  data: model.qr,
+                  version: QrVersions.auto,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +278,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       IconButton(
                         icon: Icon(Icons.qr_code),
-                        onPressed: () {},
+                        onPressed: () {
+                          showDetailQR(model);
+                        },
                       ),
                     ],
                   ),

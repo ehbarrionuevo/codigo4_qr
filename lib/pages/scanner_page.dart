@@ -19,6 +19,9 @@ class _ScannerPageState extends State<ScannerPage> {
   String qrValue = "";
   TextEditingController descriptionController = TextEditingController();
 
+  CollectionReference qrReference =
+      FirebaseFirestore.instance.collection('qr_collection');
+
   @override
   void reassemble() {
     super.reassemble();
@@ -144,17 +147,19 @@ class _ScannerPageState extends State<ScannerPage> {
                         qr: qrValue,
                       );
 
-                      Data().addQr(model);
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            "Se registró correctamente",
-                          ),
-                        ),
-                      );
-
-                      Navigator.pop(context);
+                      // Data().addQr(model);
+                      qrReference.add(model.toJson()).then((value) {
+                        if (value.id.isNotEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Se registró correctamente",
+                              ),
+                            ),
+                          );
+                          Navigator.pop(context);
+                        }
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
