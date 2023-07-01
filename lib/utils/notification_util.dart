@@ -1,4 +1,8 @@
+import 'package:codigo4_qr/pages/dashboard_page.dart';
+import 'package:codigo4_qr/pages/scanner_page.dart';
+import 'package:codigo4_qr/utils/global_variable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 class NotificationUtil {
   static FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -31,6 +35,11 @@ class NotificationUtil {
     if (message.notification != null) {
       print(message.notification!.title);
       print(message.notification!.body);
+      Navigator.of(GlobalVariable.navState.currentContext!).push(
+        MaterialPageRoute(
+          builder: (context) => ScannerPage(),
+        ),
+      );
     }
   }
 }
