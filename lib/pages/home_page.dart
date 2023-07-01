@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +10,9 @@ import 'package:excel/excel.dart' as excel;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class HomePage extends StatefulWidget {
   @override
@@ -142,6 +146,101 @@ class _HomePageState extends State<HomePage> {
     OpenFilex.open("${directory.path}/reporteExcel.xlsx");
   }
 
+  exportPdf() async {
+    List<QrModel> data = await getDataQR();
+
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return [
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Container(
+                  width: 80,
+                  height: 80,
+                  color: PdfColors.amber,
+                ),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      "Teléfono: 34232343",
+                    ),
+                    pw.Text(
+                      "Dirección: Av Lima 123",
+                    ),
+                    pw.Text(
+                      "E-mail: mandarina@gmail.com",
+                    ),
+                    pw.Text(
+                      "Contácto: Juan Lopez",
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            pw.ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (pw.Context context, int index) {
+                return pw.Container(
+                  margin: const pw.EdgeInsets.all(6.0),
+                  padding: const pw.EdgeInsets.all(8.0),
+                  decoration: pw.BoxDecoration(
+                    borderRadius: pw.BorderRadius.circular(8.0),
+                    border: pw.Border.all(
+                      width: 0.9,
+                      color: PdfColors.black,
+                    ),
+                  ),
+                  child: pw.Column(
+                    children: [
+                      pw.Row(
+                        children: [
+                          pw.Text("ID: "),
+                          pw.Text("${index + 1}"),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text("Descripción: "),
+                          pw.Text(data[index].description),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text("Fecha: "),
+                          pw.Text(data[index].datetime.toString()),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text("QR: "),
+                          pw.Expanded(
+                            child: pw.Text(data[index].qr),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ];
+        },
+      ),
+    );
+
+    Uint8List bytes = await pdf.save();
+    Directory directory = await getApplicationDocumentsDirectory();
+    File pdfFile = File("${directory.path}/reportePdf.pdf");
+    pdfFile.createSync(recursive: true);
+    pdfFile.writeAsBytesSync(bytes);
+    OpenFilex.open("${directory.path}/reportePdf.pdf");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,7 +268,9 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.import_export),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              exportPdf();
+            },
             icon: Icon(Icons.picture_as_pdf),
           ),
         ],
