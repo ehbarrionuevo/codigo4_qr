@@ -7,6 +7,7 @@ import 'package:codigo4_qr/data/data.dart';
 import 'package:codigo4_qr/models/qr_model.dart';
 import 'package:codigo4_qr/pages/scanner_page.dart';
 import 'package:excel/excel.dart' as excel;
+import 'package:flutter/services.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -149,6 +150,9 @@ class _HomePageState extends State<HomePage> {
   exportPdf() async {
     List<QrModel> data = await getDataQR();
 
+    ByteData byteData = await rootBundle.load("assets/images/vw.png");
+    Uint8List bytesLogo = byteData.buffer.asUint8List();
+
     final pdf = pw.Document();
     pdf.addPage(
       pw.MultiPage(
@@ -158,10 +162,9 @@ class _HomePageState extends State<HomePage> {
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Container(
-                  width: 80,
-                  height: 80,
-                  color: PdfColors.amber,
+                pw.Image(
+                  pw.MemoryImage(bytesLogo),
+                  height: 60,
                 ),
                 pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
