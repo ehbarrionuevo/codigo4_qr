@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:codigo4_qr/pages/dashboard_page.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codigo4_qr/data/data.dart';
@@ -266,6 +267,19 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardPage(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.bar_chart,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
               exportExcel();
             },
             icon: Icon(Icons.import_export),
@@ -455,6 +469,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.share),
+                        onPressed: () {
+                          Share.share(model.description, subject: "QR Data: ");
+                        },
                       ),
                       IconButton(
                         icon: Icon(Icons.qr_code),
